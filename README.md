@@ -1,6 +1,6 @@
 ## About this repository
 
-This repository has MATLAB scripts that will produce plots for our Cheng's Task 2C CA1 paper titled ***"Distinct neural mechanisms for heading retrieval and context recognition in the hippocampus during spatial reorientation"***. Other repos referenced in the paper will produce the figures not found here.
+This repository has MATLAB scripts that will produce plots for our Cheng's Task 2C CA1 neuroscience paper titled ***"Distinct neural mechanisms for heading retrieval and context recognition in the hippocampus during spatial reorientation"***. Other repos referenced in the paper will produce the figures not found here.
 
 ## Dataset files
 
