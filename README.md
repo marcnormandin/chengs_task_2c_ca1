@@ -14,11 +14,11 @@ The code requires the associated data files which are not stored in this repo. S
 
 ## How to adapt the code for your system:
 
-* Open the file "/figure_scripts/load_figure_config.m" in an editor.
+* Open the file "`/figure_scripts/load_figure_config.m`" in an editor.
 * Change the respective folder variable values to be the locations on your local computer.
 
 ## To reproduce the figures (from paper and supplement):
 
-* The code for each figure is located in subfolders of '/figure_scripts'. Navigate to the folder of the figure you wish to make and then run the associated main script; generally the script will be prefixed "runme_figure", but some scripts have have multiple stages so run those in sequence.
+* The code for each figure is located in subfolders of `/figure_scripts`. Navigate to the folder of the figure you wish to make and then run the associated main script; generally the script will be prefixed "`runme_figure`", but some scripts have have multiple stages so run those in sequence.
 
-* The figures will be saved to the folder specified by CHENGS_TASK_2C_FIGURES_CONFIG.FIGURE_OUTPUT_FOLDER.
+* The figures will be saved to the folder specified by `CHENGS_TASK_2C_FIGURES_CONFIG.FIGURE_OUTPUT_FOLDER`.
