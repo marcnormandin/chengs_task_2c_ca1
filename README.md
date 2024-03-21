@@ -3,8 +3,8 @@
 The code requires the associated data files which are not stored in this repo.
 
 How to set up:
-- Download the MuLaNA repository: https://github.com/marcnormandin/MuLaNA
-- Download CircStats2012 package: https://www.mathworks.com/matlabcentral/fileexchange/10676-circular-statistics-toolbox-directional-statistics
+- Download MuLaNA: https://github.com/marcnormandin/MuLaNA
+- Download Circular Statistics Toolbox: https://www.mathworks.com/matlabcentral/fileexchange/10676-circular-statistics-toolbox-directional-statistics
 - Download the data repo associated with the paper
 - Edit the contents of /figure_scripts/load_figure_config.m
 - - Change the respective variables for the folders to point to the locations on your computer.
