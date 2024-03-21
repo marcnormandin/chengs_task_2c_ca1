@@ -7,7 +7,7 @@ This repository has MATLAB scripts that will produce plots for our Cheng's Task 
 The code requires the associated data files which are not stored in this repo. See the paper for a link to them.
 
 ## Required codes:
-* Download MuLaNA: [https://github.com/marcnormandin/chengs_task_2c_ca1_MuLaNA](https://github.com/marcnormandin/chengs_task_2c_ca1_MuLaNA)
+* Download MuLaNA (frozen for the paper): [https://github.com/marcnormandin/chengs_task_2c_ca1_MuLaNA](https://github.com/marcnormandin/chengs_task_2c_ca1_MuLaNA)
 * Download Distinguishable Colors [https://www.mathworks.com/matlabcentral/fileexchange/29702-generate-maximally-perceptually-distinct-colors](https://www.mathworks.com/matlabcentral/fileexchange/29702-generate-maximally-perceptually-distinct-colors)
 * Download Circular Statistics Toolbox: https://www.mathworks.com/matlabcentral/fileexchange/10676-circular-statistics-toolbox-directional-statistics
 * Download boxplotGroupV2 [https://www.mathworks.com/matlabcentral/fileexchange/74437-boxplotgroup](https://www.mathworks.com/matlabcentral/fileexchange/74437-boxplotgroup)
