@@ -311,6 +311,32 @@ end
 sgtitle('Averaged Calcium + Tetrode Plots');
 mulana_savefig(hFig, OUTPUT_FOLDER, sprintf('figure_S4_averaged_bfo90_digtype_matrices'), {'svg', 'png', 'fig'})
 
+
+%% Added to save excel for NatComms requirement
+groupLabels = {'Day 1', 'Day 2', 'Day 3'};
+rotationDegs = [0, 90, 180, 270];
+X = [];
+k = 1;
+for iRow = 1:size(TA,1)
+    
+    XM = TA.datasetAveragedMatrix{iRow};
+    for i = 1:length(digTypesPlot)
+        firstDig = digTypesPlot{i};
+        for j = 1:length(digTypesPlot)
+            secondDig = digTypesPlot{j};
+
+            X(k).dayName = TA.groupLabel{iRow};
+            X(k).rotationDeg = TA.rotationDeg(iRow);
+            X(k).currentDig = firstDig;
+            X(k).subsequentDig = secondDig;
+            X(k).probability = XM(i,j);
+            k = k + 1;
+        end
+    end
+end
+X = struct2table(X)
+writetable(X, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S4.xlsx'), 'Sheet', 'figure_S4');
+
 %% FUNCTIONS
 function [MT] = make_matrix_triangular(M)
     % This doesn't take into account that a 90 for one pair will be 270 the

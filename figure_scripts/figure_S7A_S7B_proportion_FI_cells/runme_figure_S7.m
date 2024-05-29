@@ -77,6 +77,18 @@ ylabel('Percent FI')
 fnPrefix = 'figure_S7_percents_FI_vs_day';
 ml_savefig(hFig, OUTPUT_FOLDER, fnPrefix, {'png', 'svg', 'fig'});
 
+%% Added to export to excel for natcomms
+% Just read in the data and format it for natcomms
+XT = readtable(fullfile(pwd, 'local_output', 'tetrodes_percent_stable_per_animal_per_day.xlsx'));
+XT.datasetName = repmat(string('Tetrodes'), height(XT), 1);
+XC = readtable(fullfile(pwd, 'local_output', 'calcium_percent_stable_per_animal_per_day.xlsx'));
+XC.datasetName = repmat(string('Calcium'), height(XC), 1);
+
+XA = [XT; XC];
+XA = renamevars(XA,["groupLabel"],["dayName"]);
+writetable(XA, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S7.xlsx'), 'Sheet', 'figure_S7');
+
+%% Functions
 function [T, M,SE,groupLabels] =  process_dataset(dataset)
     groupLabels = {'Day 1', 'Day 2', 'Day 3'};
     BA = dataset.analysisResults.BestAligned;

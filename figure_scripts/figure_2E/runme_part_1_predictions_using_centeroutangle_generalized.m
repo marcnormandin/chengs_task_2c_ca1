@@ -85,6 +85,8 @@ for iRow = 1:size(PS,1)
     writetable(S, resultsFn);
     fprintf('Data saved to: %s\n', resultsFn);
 
+    copyfile(resultsFn, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_2E.xlsx'));
+
     % Make a figure (optional)
     if algoSettings.makeFigure == true
         [hFig] = make_figure(resultsFn);

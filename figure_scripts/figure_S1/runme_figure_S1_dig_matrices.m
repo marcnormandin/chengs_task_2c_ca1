@@ -43,7 +43,6 @@ for iRow = 1:size(T,1)
     end
 end
 
-
 %%
 MS = M(2:4,1:4);
 hFig = figure;
@@ -56,6 +55,42 @@ ax.XData = ["C", "F", "G", "W"];
 ax.YData = ["F", "G", "W"];
 
 mulana_savefig(hFig, OUTPUT_FOLDER,'figure_S1_digmatrices', {'png', 'svg'});
+
+
+%% Export to Excel for Natt comms
+% The cup name nomenclature changed, so this renames to match the paper
+clc
+R = table2struct(T);
+%k = 1;
+digNames = ["C", "N", "F", "W"]
+%digNames = "CNFW";
+for iRow = 1:size(T,1)
+    sArray = split(T.secondDig{iRow},',');
+    priorIndex = get_index(T.firstDig{iRow});
+
+    % just get the indices
+    secondDigIds = [];
+    for iSecond = 1:length(sArray)
+        s = sArray(iSecond);
+        sIndex = get_index(s);
+
+        secondDigIds(end+1) = sIndex;
+    end
+
+    % convert ids to digs
+    %r = table2struct(T(iRow,:));
+    R(iRow).firstDig = digNames{priorIndex};
+    secondDigNames = cell(1,length(secondDigIds));
+    for i = 1:length(secondDigIds)
+        secondDigNames{i} = digNames{secondDigIds(i)};
+    end
+    R(iRow).secondDig = string(secondDigNames);
+    %k = k + 1;
+end
+R = struct2table(R)
+% save the data to excel as required by natcomms
+writetable(R, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S1.xlsx'), 'Sheet', 'figure_S1');
+
 
 %%
 function index = get_index(s)

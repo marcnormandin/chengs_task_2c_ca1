@@ -19,7 +19,7 @@ end
 
 
 %% Load the calcium results from the main analysis since we want the maps which are saved to a mat file.
-DO_CALCIUM = true; % Set this to true to process calcium and false for tetrodes.
+DO_CALCIUM = false; % Set this to true to process calcium and false for tetrodes.
 
 if DO_CALCIUM
     analysisResultsFolder = fullfile(INPUT_FOLDER, 'calcium_20220516_170618');
@@ -257,6 +257,28 @@ for iGroup = 1:nGroups
 end % iGroup
 
 ml_savefig(hFig, OUTPUT_FOLDER, sprintf('figure_S3_%s_roseplots_per_day', datasetName), {'png', 'svg', 'fig'});
+
+%% Added to save to excel for natcomms
+LOCAL_OUTPUT_FOLDER = fullfile(pwd, 'local_output');
+if ~exist(LOCAL_OUTPUT_FOLDER, 'dir')
+    mkdir(LOCAL_OUTPUT_FOLDER);
+end
+
+%For Tetrodes ABC, for Calcium DEF
+rangeLetters = 'ABCDEF';
+groupLabels = {'Day 1', 'Day 2', 'Day 3'}; % unique(R.groupLabel);
+nGroups = length(groupLabels);
+for iGroup = 1:nGroups
+    groupLabel = groupLabels{iGroup};
+    S = R(ismember(R.groupLabel, groupLabel),:);
+
+    columnName = sprintf('center_out_angle_difference_%s_%s', datasetName, strrep(groupLabel, ' ', '_'));
+    X = S.centerOutAngleDifference(:);
+    XT = array2table(X,'VariableNames',{columnName});
+    nRows = size(XT,1)+1; % +1 for the column name
+    writetable(XT, fullfile(LOCAL_OUTPUT_FOLDER, 'natcomms_excel_figure_S3.xlsx'), 'Sheet', 'figure_S3', 'Range', [rangeLetters(DO_CALCIUM*nGroups+iGroup) '1'])
+
+end % iGroup
 
 
 function polarplot_angle_differences(angles, binEdges)    

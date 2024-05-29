@@ -107,7 +107,17 @@ sgtitle(sprintf('Population Similarity Across Context'))
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_S12A', {'png', 'svg'});
 
 
-
+%% Added to export data for natcomms
+NC = nan(651, size(F,1)); % each array is size 651
+k = 1;
+variableNames = cell(1,size(NC,2));
+for iRow = 1:size(F,1)
+    NC(:,k) = F.dp_across{iRow};
+    variableNames{k} = sprintf('dot_product_across_%s_decile_%d', strrep(F.sessionName{iRow}, ' ', '_'), F.iBound(iRow));
+    k = k + 1;
+end % iGroup
+NC = array2table(NC, 'VariableNames', variableNames)
+writetable(NC, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S12A.xlsx'), 'Sheet', 'figure_S12A');
 
 
 %% Loading functions

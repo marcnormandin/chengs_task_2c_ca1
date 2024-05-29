@@ -52,3 +52,10 @@ legend({'Within Context', 'Across Context'}, 'location', 'southoutside', 'orient
 set(gca, 'fontsize', 18, 'fontweight', 'bold')
 
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_S14', {'png', 'svg'});
+
+%% Added to export data to excel for natcomms
+NC = T;
+NC(:, ismember(NC.Properties.VariableNames, {'sessionName', 'groupId', 'withinError', 'acrossError'})) = [];
+NC = renamevars(NC, {'groupLabel', 'acrossMean', 'withinMean'}, {'dayName', 'absolute_rate_difference_within', 'absolute_rate_difference_across'});
+NC
+writetable(NC, fullfile(OUTPUT_FOLDER, "natcomms_excel_figure_S14.xlsx"), 'Sheet', 'figure_S14');

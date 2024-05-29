@@ -34,8 +34,26 @@ analysisInput = calData.analysisInput;
 analysisResults = calData.analysisResults;
 
 %% This is the function that was used to generate the pop Figure 4B
-compute_popvectors_across_contexts_unregistered_figure_4B(analysisSettings, analysisResults.BestAligned, analysisSettings.POPVECTORS_BESTALIGNED_STABILITY_THRESHOLD_CRITERIA, OUTPUT_FOLDER);
+F = compute_popvectors_across_contexts_unregistered_figure_4B(analysisSettings, analysisResults.BestAligned, analysisSettings.POPVECTORS_BESTALIGNED_STABILITY_THRESHOLD_CRITERIA, OUTPUT_FOLDER);
 
+%% Code added to save data in Excel as required by the journal
+nRows = size(F,1);
+A = zeros(651, nRows);
+columnNames = cell(nRows,1);
+for iRow = 1:nRows
+    A(:,iRow) = F.dp_across{iRow};
+
+    dayString = strrep(F.sessionName{iRow}, ' ', '_');
+    if F.isStable(iRow) == true
+        stabilityString = 'FI';
+    else
+        stabilityString = 'FS';
+    end
+    columnNames{iRow} = sprintf('dot_product_across_%s_%s', dayString, stabilityString);
+end % iRow
+T = array2table(A, 'VariableNames', columnNames);
+
+writetable(T, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_4B.xlsx'));
 
 %% Loading functions
 function [n_errors, bad_ba_rows] = verify_data_integrity(MapsData, BestAligned)

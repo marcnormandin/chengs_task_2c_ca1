@@ -191,6 +191,24 @@ end
 
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_6B_piecharts', {'png', 'svg'});
 
+%% Added to export for NatComms
+% Use the FI and FS nomenclature
+NC = P;
+nRows = size(NC,1);
+stabilityString = cell(nRows,1);
+for iRow = 1:nRows
+    if NC.stability(iRow) == true
+        stabilityString{iRow} = 'FI';
+    else
+        stabilityString{iRow} = 'FS';
+    end
+end
+NC.type = stabilityString;
+NC(:, ismember(NC.Properties.VariableNames, {'iPair', 'stability'})) = [];
+writetable(NC, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_6B.xlsx'), 'Sheet', 'figure_6B')
+
+
+
 function plot_pie(P, groupLabelA, groupLabelB, stability)
     X = P(ismember(P.groupLabelA, groupLabelA) & ismember(P.groupLabelB, groupLabelB) & P.stability == stability, :);
     x = [X.percentSame(1); X.percentDifferent(1)];

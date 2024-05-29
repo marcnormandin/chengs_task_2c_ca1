@@ -48,6 +48,38 @@ mulana_savefig(hFig, CHENGS_TASK_2C_FIGURES_CONFIG.FIGURE_OUTPUT_FOLDER, 'figure
 
 
 
+%% Added to export to excel for natcomms
+groupLabels = {'Day 1', 'Day 2', 'Day 3'};
+nGroups = length(groupLabels);
+excelColumns = string(('a':'z').').';
+k = 1;
+stabilityTypes = {'stable', 'unstable'};
+cellTypes = {'FI', 'FS'};
+for iStabilityType = 1:length(stabilityTypes)
+    stabilityType = stabilityTypes{iStabilityType};
+    cellType = cellTypes{iStabilityType};
+
+    x = prepare_x(T, stabilityType);
+    
+    comparisonTypes = {'within', 'across'};
+    for iComparison = 1:length(comparisonTypes)
+        comparisonType = comparisonTypes{iComparison};
+        for iGroup = 1:nGroups
+            dayName = groupLabels{iGroup};
+    
+            columnName = sprintf('absolute_rate_difference_%s_%s_%s', cellType, comparisonType, strrep(groupLabels{iGroup}, ' ', '_'));
+            xSave = x{iComparison}(:,iGroup);
+            
+            writetable(array2table(xSave, 'VariableNames', {columnName}), fullfile(OUTPUT_FOLDER, "natcomms_excel_figure_S16A_S16B.xlsx"), 'Sheet', 'figure_S16A_S16B', 'Range', [excelColumns(k) '1']);
+            
+            k = k + 1;
+        end
+    end % iComparison
+end % iStabilityType
+
+
+
+
 
 %% Functions
 

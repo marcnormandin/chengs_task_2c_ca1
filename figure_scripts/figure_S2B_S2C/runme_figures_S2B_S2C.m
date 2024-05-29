@@ -104,6 +104,17 @@ linkaxes(ax, 'xy')
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_S2C_trial_map_cup_fraction_occupied_histogram', {'png', 'svg', 'fig'});
 
 
+%% Make an excel sheet for natcomms
+XTetrodes = TTetrodes;
+XTetrodes.dataset = repmat(string('Tetrodes'), height(XTetrodes), 1);
+XCalcium = TCalcium;
+XCalcium.dataset = repmat(string('Calcium'), height(XCalcium), 1);
+
+% Needed columns
+columnNames = {'dataset', 'animalName', 'groupLabel', 'trialId', 'fractionOccupied', 'fractionCupsOccupied'};
+X = [XTetrodes(:, ismember(XTetrodes.Properties.VariableNames, columnNames)); XCalcium(:, ismember(XCalcium.Properties.VariableNames, columnNames))];
+
+writetable(X, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S2B_S2C.xlsx'), 'Sheet', 'figure_S2B_S2C');
 %%
 function [SessionsToGroups] = load_sessions_to_groups_table(isCalcium)
     if isCalcium

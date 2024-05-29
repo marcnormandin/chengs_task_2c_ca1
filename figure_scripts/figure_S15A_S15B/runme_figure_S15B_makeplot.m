@@ -40,6 +40,38 @@ for i = 1:size(fnList,1)
 end
 mulana_savefig(hFig, OUTPUT_FOLDER, "figure_S15B", {'png', 'svg'});
 
+
+
+%% Added to export to excel for natcomms
+groupLabels = {'Day 1', 'Day 2', 'Day 3'};
+nGroups = length(groupLabels);
+excelColumns = string(('a':'z').').';
+k = 1;
+for i = 1:size(fnList,1)
+    fraction = fnList{i,1};
+    fn = fnList{i,2};
+    x = prepare_x(fn);
+
+    comparisonTypes = {'within', 'across'};
+    for iComparison = 1:length(comparisonTypes)
+        comparisonType = comparisonTypes{iComparison};
+        for iGroup = 1:nGroups
+            dayName = groupLabels{iGroup};
+
+            columnName = sprintf('pfrs_fraction_%0.1f_%s_%s', fraction, comparisonType, strrep(groupLabels{iGroup}, ' ', '_'));
+            xSave = x{iComparison}(:,iGroup);
+            
+            writetable(array2table(xSave, 'VariableNames', {columnName}), fullfile(OUTPUT_FOLDER, "natcomms_excel_figure_S15B.xlsx"), 'Sheet', 'figure_S15B', 'Range', [excelColumns(k) '1']);
+            
+            k = k + 1;
+        end
+    end % iComparison
+end
+
+
+
+
+%% Functions
 function [x] = prepare_x(fn)
     T = readtable(fn);
     badInds = union(find(isnan(T.within_mean)), find(isnan(T.across_mean)));

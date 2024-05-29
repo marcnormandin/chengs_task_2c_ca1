@@ -48,7 +48,7 @@ TT = [];
 for binId = 1:10
     ifr = T.ics_avg(T.binId == binId,:);
     % Remove outliers for plotting
-    ifr = rmoutliers(ifr);
+    %ifr = rmoutliers(ifr);
     X = nan(length(ifr),2);
     X(:,1) = ifr;
     X(:,2) = binId;
@@ -65,3 +65,8 @@ grid on
 set(gca, 'fontweight', 'bold', 'fontsize', 18);
 
 mulana_savefig(hFig, OUTPUT_FOLDER, "figure_S9B_inforate_per_decile", {'png', 'svg'});
+
+%% Added to save data to excel in a format for natcomms
+NC = array2table(TT, 'VariableNames', {'information_rate', 'decile'})
+writetable(NC, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S9B.xlsx'), 'Sheet', 'figure_S9B');
+

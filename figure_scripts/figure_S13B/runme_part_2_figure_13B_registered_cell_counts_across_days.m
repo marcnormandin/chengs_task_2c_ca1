@@ -267,6 +267,17 @@ linkaxes(ax, 'xy')
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_S13B_abs_correlation_differences_deciles', {'png', 'svg'});
 
 
+%% Added to export data to excel for natcomms
+NC = TAll(:, ismember(TAll.Properties.VariableNames, {'registeredCellName', 'bestCorrelationA', 'bestCorrelationB', 'groupLabelA', 'groupLabelB', 'bestCorrelationChange', 'BIN_ID_A'}));
+NC.absoluteCorrelationDifference = abs(NC.bestCorrelationChange);
+NC = renamevars(NC, {'BIN_ID_A', 'groupLabelA', 'groupLabelB'}, {'decile', 'dayA', 'dayB'});
+NC(:, ismember(NC.Properties.VariableNames, {'bestCorrelationChange'})) = [];
+NC
+writetable(NC, fullfile(OUTPUT_FOLDER, "natcomms_excel_figure_S13B.xlsx"), 'Sheet', 'figure_S13B')
+
+
+
+
 %% Loading functions
 function [n_errors, bad_ba_rows] = verify_data_integrity(MapsData, BestAligned)
     n_errors = 0;

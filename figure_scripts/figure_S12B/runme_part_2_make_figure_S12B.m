@@ -30,8 +30,11 @@ set(gca, 'fontweight', 'bold', 'fontsize', 18);
 
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_S12B', {'png', 'svg', 'fig'});
 
-
-
+%% Added to export data to excel for natcomms
+T = allV;
+T = renamevars(T,["bestCorrelation_recomputed","groupLabel","recording_type"],["context_similarity","dayName","dataset"]);
+T(:,ismember(T.Properties.VariableNames, {'animalSessionCellName', 'cellId', 'isStable', 'isValid', 'dayNum', 'sessionName', 'bestCorrelation', 'groupId'})) = [];
+writetable(T, fullfile(OUTPUT_FOLDER, 'natcomms_excel_figure_S12B.xlsx'), 'Sheet', 'figure_S12B');
 
 function plot_prediction_accuracy(V)
     % Plot Accuracy 

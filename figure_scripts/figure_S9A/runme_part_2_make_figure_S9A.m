@@ -36,6 +36,19 @@ axis([a(1), a(2), 0, 100]);
 
 mulana_savefig(hFig, OUTPUT_FOLDER, 'figure_S9A', {'png', 'svg'});
 
+%% Save data to excel as wanted by natcomms
+stabilityTypes = {'FI', 'FS'};
+nGroups = length(groupLabels);
+k = 1;
+columnNames = {'A1', 'B1', 'C1', 'D1', 'E1', 'F1'};
+for iStability = 1:length(stabilityTypes)
+    for iGroup = 1:nGroups
+        columnTitle = sprintf('calcium_information_content_%s_%s', stabilityTypes{iStability}, strrep(groupLabels{iGroup}, ' ', '_'));
+        X = array2table(x{iStability}(:,iGroup), 'VariableNames', {columnTitle});
+        writetable(X, fullfile(OUTPUT_FOLDER, "natcomms_excel_figure_S9A.xlsx"), 'Sheet', 'figure_S9A', 'Range', columnNames{k})
+        k = k + 1;
+    end
+end % iStability
 
 function [x] = prepare_x(R)
     stabilities = [true, false];

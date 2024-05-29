@@ -70,3 +70,11 @@ set(gca, 'fontweight', 'bold', 'fontsize', 18);
 
 mulana_savefig(hFig, OUTPUT_FOLDER, "figure_S13A", {'png', 'svg'});
 
+%% Added to export data for natcomms
+excelRanges = {'A1', 'B1', 'C1', 'D1', 'E1', 'F1','G1','H1','I1','J1'};
+for binId = 1:10
+    columnName = sprintf('cellregscore_decile_%d', binId);
+    x = BA.cellRegScore(BA.binId == binId);
+    X = array2table(x, 'VariableNames', {columnName});
+    writetable(X, fullfile(OUTPUT_FOLDER, "natcomms_excel_figure_S13A.xlsx"), 'Sheet', 'figure_S13A', 'Range', excelRanges{binId});
+end

@@ -1,5 +1,5 @@
 % Marc Normandin, Muzzio Lab, Psychological & Brain Sciences, University of Iowa, 2024
-function compute_popvectors_across_contexts_unregistered_figure_4B(analysisSettings, BestAligned, BESTALIGNED_STABILITY_THRESHOLD_CRITERIA, OUTPUT_FOLDER)
+function [F] = compute_popvectors_across_contexts_unregistered_figure_4B(analysisSettings, BestAligned, BESTALIGNED_STABILITY_THRESHOLD_CRITERIA, OUTPUT_FOLDER)
     % Add the group labels (day names) to the data
     SessionsToGroups = load_sessions_to_groups_table(analysisSettings);
     eliminateUnmatched = true;
